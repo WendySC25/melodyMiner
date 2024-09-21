@@ -21,3 +21,11 @@
 - Potentially includes MP3 playback capabilities.
 
 This project aims to simplify the management of music collections while providing insightful metadata at the user’s fingertips.
+
+
+
+# **Important Notice**
+
+**This project is in development.**
+
+**Don't forget to check the wiki!** I have added a couple of documents.
