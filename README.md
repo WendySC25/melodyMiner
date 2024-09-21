@@ -28,4 +28,4 @@ This project aims to simplify the management of music collections while providin
 
 **This project is in development.**
 
-**Don't forget to check the wiki!** 😉
+**Don't forget to check the wiki!** I have added a couple of documents.
