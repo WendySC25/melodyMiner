@@ -5,6 +5,9 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+
+#include <id3tag.h>
+
 #include "include/miner.h"
 
 Miner *newMiner(const char *directory) {
@@ -44,6 +47,8 @@ void freeMiner(Miner *miner) {
 
 void mineTags(Miner *miner) {
     miner->tags = malloc(miner->tag_count * sizeof(ID3Tag));
+
+    
     for (int i = 0; i < miner->tag_count; i++) 
         miner->tags[i] = *newID3Tag("Sample Title", "Sample Artist", "Sample Album", i + 1, 2023, "Rock");
 }
@@ -73,7 +78,6 @@ void scanDirectory(const char *path) {
     closedir(dp);
 }
 
-
 void findMusicFiles(Miner *miner, const char *directory) {
 
     DIR *dir;
@@ -95,20 +99,19 @@ void findMusicFiles(Miner *miner, const char *directory) {
         char full_path[1024];
         snprintf(full_path, sizeof(full_path), "%s/%s", directory, entry->d_name);
 
-        // Comprobar si es un directorio
         struct stat path_stat;
         stat(full_path, &path_stat);
         if (S_ISDIR(path_stat.st_mode)) {
-            // Es un subdirectorio, llamar recursivamente
             findMusicFiles(miner, full_path);
         } else if (strstr(entry->d_name, ".mp3")) {
-            // Filtrar solo archivos .mp3
+            
             miner->file_paths = realloc(miner->file_paths, (miner->file_count + 1) * sizeof(char *));
             if (!miner->file_paths) {
                 perror("Failed to allocate memory for file paths");
                 closedir(dir);
                 return;
             }
+
             miner->file_paths[miner->file_count] = strdup(full_path);
             miner->file_count++;
         }
