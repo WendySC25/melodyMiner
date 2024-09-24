@@ -3,6 +3,7 @@
 #include <string.h>
 #include "include/ID3Tag.h"
 
+
 ID3Tag *newID3Tag(const char *title, const char *artist, const char *album, int track, int year, const char *genre) {
 
     ID3Tag *tag = malloc(sizeof(ID3Tag));
