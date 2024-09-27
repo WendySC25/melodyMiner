@@ -1,20 +1,33 @@
 #ifndef ID3TAG_H
 #define ID3TAG_H
 
-typedef struct {
-    char *title;        // TIT2
-    char *artist;       // TPE1
-    char *album;        // TALB
-    char *genre;        // TCON
-    int   track;          // TRCK
-    int   year;           // TDRC
+#include <string>
 
-    char *file_path;
+class ID3Tag {
+
+private:
+    std::string title;   // TIT2
+    std::string artist;  // TPE1
+    std::string album;   // TALB
+    std::string genre;   // TCON
+    int track;           // TRCK
+    int year;            // TDRC
+
+public:
+    ID3Tag(const std::string& title, const std::string& artist, const std::string& album, 
+           int track, int year, const std::string& genre);
     
+    ~ID3Tag();
 
-} ID3Tag;
+    // Métodos de acceso (getters)
+    std::string getTitle() const;
+    std::string getArtist() const;
+    std::string getAlbum() const;
+    std::string getGenre() const;
+    int getTrack() const;
+    int getYear() const;
 
-ID3Tag *newID3Tag(const char *title, const char *artist, const char *album, int track, int year, const char *genre);
-void freeID3Tag(ID3Tag *tag);
 
-#endif // ID3TAGS_H
+};
+
+#endif // ID3TAG_H

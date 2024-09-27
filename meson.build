@@ -1,10 +1,12 @@
-project('melodyMiner', 'c')
+project('melodyMiner', 'cpp')
 
-# Dependency
-id3tag_dep = dependency('id3tag')
+srcs = [
+    'src/main.cpp',
+    'src/Miner.cpp',
+    'src/ID3Tag.cpp',
+]
 
-# Source directories
-src = files('src/main.c', 'src/miner.c', 'src/ID3Tag.c')
+# TagLib
+taglib_dep = dependency('taglib')
 
-# Excutable
-executable('music_miner', src, dependencies: id3tag_dep)    
+executable('melodyMiner', srcs, dependencies : taglib_dep)
