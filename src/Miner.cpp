@@ -62,7 +62,6 @@ void Miner::mineTags() {
             uint64_t year = taglib_tag_year(tag);
             uint64_t track = taglib_tag_track(tag);
 
-
            auto newTag = std::make_unique<ID3Tag>(
                 (title && title[0] != '\0') ? std::string(title) : "Unknown",
                 (artist && artist[0] != '\0') ? std::string(artist) : "Unknown",
