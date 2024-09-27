@@ -2,8 +2,20 @@
 #define ID3TAG_H
 
 #include <string>
+#include <memory>  
 
 class ID3Tag {
+public:
+    ID3Tag(const std::string& title, const std::string& artist, const std::string& album, const std::string& genre,
+           int track, int year);
+    ~ID3Tag(); // Destructor declaration
+
+    const std::string& getTitle() const;
+    const std::string& getArtist() const;
+    const std::string& getAlbum() const;
+    const std::string& getGenre() const;
+    int getTrack() const;
+    int getYear() const;
 
 private:
     std::string title;   // TIT2
@@ -12,22 +24,6 @@ private:
     std::string genre;   // TCON
     int track;           // TRCK
     int year;            // TDRC
-
-public:
-    ID3Tag(const std::string& title, const std::string& artist, const std::string& album, 
-           int track, int year, const std::string& genre);
-    
-    ~ID3Tag();
-
-    // Métodos de acceso (getters)
-    std::string getTitle() const;
-    std::string getArtist() const;
-    std::string getAlbum() const;
-    std::string getGenre() const;
-    int getTrack() const;
-    int getYear() const;
-
-
 };
 
 #endif // ID3TAG_H

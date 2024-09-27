@@ -10,6 +10,7 @@ int main(int argc, char* argv[]) {
     std::string directory = argv[1];
     Miner miner(directory);
     miner.findMusicFiles(directory);
+    miner.mineTags();   
 
     return 0;
 }

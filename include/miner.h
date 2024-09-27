@@ -1,25 +1,24 @@
 #ifndef MINER_H
 #define MINER_H
 
-#include <iostream>
-#include <vector>
 #include <string>
+#include <vector>
+#include <memory>  
 
-#include "include/ID3Tag.h"
+#include "ID3Tag.h"
 
 class Miner {
 
-     private:
-        std::string directory;
-        std::vector<std::string> file_paths;
-        std::vector<ID3Tag> tags;
-
     public:
-        Miner(const std::string& directory);
+        Miner(const std::string& dir) : directory(dir) {}
         void findMusicFiles(const std::string& directory);
         void mineTags();
 
-        
+    private:
+        std::string directory;
+        std::vector<std::string> file_paths; 
+        std::vector<std::unique_ptr<ID3Tag> > tags; 
 };
+
 
 #endif // MINER_H

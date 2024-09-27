@@ -1,4 +1,6 @@
-project('melodyMiner', 'cpp')
+project('melodyMiner', 'cpp',
+        default_options : ['cpp_std=c++14'])
+
 
 srcs = [
     'src/main.cpp',
@@ -6,7 +8,9 @@ srcs = [
     'src/ID3Tag.cpp',
 ]
 
-# TagLib
-taglib_dep = dependency('taglib')
+taglib_dep = dependency('taglib', required : true)
 
-executable('melodyMiner', srcs, dependencies : taglib_dep)
+executable('melodyMiner', srcs, 
+    dependencies : [taglib_dep],
+    link_args : ['-L/opt/homebrew/Cellar/taglib/1.13.1/lib', '-ltag', '-ltag_c']
+)
