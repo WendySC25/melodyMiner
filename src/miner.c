@@ -6,7 +6,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include <id3tag.h>
+
+#include <id3v2lib.h>
 
 #include "include/miner.h"
 
@@ -46,12 +47,30 @@ void freeMiner(Miner *miner) {
 }
 
 void mineTags(Miner *miner) {
-    miner->tags = malloc(miner->tag_count * sizeof(ID3Tag));
+    miner->tags = malloc(miner->file_count * sizeof(ID3Tag));
+    if (!miner->tags) {
+        perror("Failed to allocate memory for tags");
+        return;
+    }
 
+    ID3Tag *tag = id3_tag_load(miner->file_paths[1]);
+    if (tag == NULL) {
+        return;
+    }
+
+    // Obtener el título
+    const char *title = id3_tag_get_title(tag);
+    if (title) {
+        printf("Título: %s\n", title);
+    } else {
+        printf("No se encontró el título en las etiquetas ID3.\n");
+    }
+
+    // Limpiar
+    id3_tag_free(tag);
     
-    for (int i = 0; i < miner->tag_count; i++) 
-        miner->tags[i] = *newID3Tag("Sample Title", "Sample Artist", "Sample Album", i + 1, 2023, "Rock");
 }
+
 
 void scanDirectory(const char *path) {
     struct dirent *entry;
@@ -119,3 +138,4 @@ void findMusicFiles(Miner *miner, const char *directory) {
 
     closedir(dir);
 }
+ 

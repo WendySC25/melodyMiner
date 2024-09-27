@@ -1,6 +1,7 @@
 #ifndef MINER_H
 #define MINER_H
 
+// #include <id3tag.h> 
 #include "ID3Tag.h"
 
 typedef struct {
