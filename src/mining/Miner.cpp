@@ -79,6 +79,7 @@ void Miner::mineTags() {
             std::cout << "Género: " << tags.back()->getGenre() << std::endl;
             std::cout << "Año: " << tags.back()->getYear() << std::endl;
             std::cout << "Número de pista: " << tags.back()->getTrack() << std::endl;
+            std::cout << std::endl;
 
 
         } else {
