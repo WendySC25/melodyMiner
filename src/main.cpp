@@ -1,5 +1,6 @@
 #include <iostream>
 #include "include/Miner.h"
+#include "include/Database.h"
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
@@ -11,6 +12,9 @@ int main(int argc, char* argv[]) {
     Miner miner(directory);
     miner.findMusicFiles(directory);
     miner.mineTags();   
+
+    Database db("src/database/db/music_database.db");  
+    db.createTables(); 
 
     return 0;
 }
