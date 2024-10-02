@@ -7,6 +7,10 @@ srcs = [
     'src/mining/Miner.cpp',
     'src/utils/ID3Tag.cpp',
     'src/database/Database.cpp',
+    'src/database/daos/AlbumDAO.cpp',
+    'src/database/models/Album.cpp',
+    'src/database/daos/PerformerDAO.cpp',
+    'src/database/models/Performer.cpp',
 ]
 
 taglib_dep = dependency('taglib', required: true)

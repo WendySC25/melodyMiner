@@ -1,9 +1,7 @@
 #ifndef ALBUMDAO_H
 #define ALBUMDAO_H
 
-#include "include/database/models/Album.h"
-#include "include/database/daos/BaseDAO.h"
-#include "include/Database.h"
+#include "include/database/DatabaseUtils.h"
 
 class AlbumDAO : public BaseDAO<Album> {
 public:

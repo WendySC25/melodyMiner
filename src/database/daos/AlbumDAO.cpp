@@ -1,21 +1,12 @@
-#include "include/database/daos/AlbumDAO.h"
-#include "include/database/models/Album.h"
+#include "include/database/DatabaseUtils.h"
 #include <iostream>
 
 AlbumDAO::AlbumDAO(Database &db) : BaseDAO<Album>(db, "albums") {}
 
 void AlbumDAO::bindInsert(sqlite3_stmt *stmt, const Album &album) {
-    std::cout << "Valores antes de bindInsert: "
-          << album.getPath() << ", "
-          << album.getName() << ", "
-          << album.getYear() << std::endl;
-
     sqlite3_bind_text(stmt, 1, album.getPath().c_str(), -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(stmt, 2, album.getName().c_str(), -1, SQLITE_TRANSIENT);
     sqlite3_bind_int(stmt, 3, album.getYear());
-
-    std::cout << "Insertando Album: " << album.getPath() << ", " << album.getName() << ", " << album.getYear() << std::endl;
-
 }
 
 void AlbumDAO::bindUpdate(sqlite3_stmt *stmt, const Album &album) {

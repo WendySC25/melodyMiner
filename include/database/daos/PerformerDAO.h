@@ -1,25 +1,21 @@
-#ifndef PERFORMER_DAO_H
-#define PERFORMER_DAO_H
+#ifndef PERFORMERDAO_H
+#define PERFORMERDAO_H
 
-#include <string>
-#include <vector>
-#include "include/Database.h"  
+#include "include/database/DatabaseUtils.h"
 
-class Performer {
+class PerformerDAO : public BaseDAO<Performer> {
 public:
-    int         id_performer;
-    int         id_type;
-    std::string name;
+    PerformerDAO(Database &db);
+
+protected:
+    void bindInsert(sqlite3_stmt *stmt, const Performer &performer) override;
+    void bindUpdate(sqlite3_stmt *stmt, const Performer &performer) override;
+    void fillObject(sqlite3_stmt *stmt, Performer &performer) override;
+
+    std::string getInsertQuery() const override;
+    std::string getUpdateQuery() const override;
+    std::string getSelectByIdQuery() const override;
 };
 
-class PerformerDAO {
-    public:
-        PerformerDAO(Database &db);
-        void addPerformer(const Performer &performer);
-        std::vector<Performer> getAllPerformers();
-        
-    private:
-        Database &database;
-};
+#endif // ALBUMDAO_H
 
-#endif // PERFORMER_DAO_H
