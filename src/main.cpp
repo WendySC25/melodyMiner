@@ -17,7 +17,7 @@ int main(int argc, char* argv[]) {
     miner.findMusicFiles(directory);
     miner.mineTags();   
 
-    Database db("src/database/db/music_database.db");  
+    Database db("db/music_database.db");  
     db.createTables(); 
 
     AlbumDAO albumDAO(db);
@@ -58,8 +58,17 @@ int main(int argc, char* argv[]) {
 
     std::vector<Person> personas = personDAO.getAll();
 
-     for(auto personaA :  personas)
+    for(auto personaA :  personas)
         std::cout << personaA.getRealName()  << std::endl;
+
+
+    RolaDAO rolaDAO(db);
+    Rola rola(1,1,1,"PATH","TITLE",2024,2023,"GENRE");
+    rolaDAO.add(rola); 
+    std::vector<Rola> rolas = rolaDAO.getAll();
+    for (const auto& rolaA : rolas) {
+        std::cout << rolaA.getTitle() << std::endl;
+    }
 
 
 
