@@ -12,6 +12,7 @@
 #include "include/database/daos/AlbumDAO.h"
 #include "include/database/daos/PerformerDAO.h" 
 #include "include/database/daos/GroupDAO.h"
+#include "include/database/daos/PersonDAO.h"
 
 
 #endif 

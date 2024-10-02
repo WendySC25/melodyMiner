@@ -11,6 +11,10 @@ srcs = [
     'src/database/models/Album.cpp',
     'src/database/daos/PerformerDAO.cpp',
     'src/database/models/Performer.cpp',
+    'src/database/daos/GroupDAO.cpp',
+    'src/database/models/Group.cpp',
+    'src/database/daos/PersonDAO.cpp',
+    'src/database/models/Person.cpp',
 ]
 
 taglib_dep = dependency('taglib', required: true)

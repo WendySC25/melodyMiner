@@ -39,7 +39,33 @@ int main(int argc, char* argv[]) {
 
     for(auto perfomer : tuyos){
         std::cout << perfomer.getName()  << std::endl;
+
+
     }
+
+    GroupDAO groupDao(db);
+    Group grupo(1,"banda", "2023", "2024");
+    groupDao.add(grupo);
+
+    std::vector<Group> grupos = groupDao.getAll();
+
+    for(auto grupoA :  grupos)
+        std::cout << grupoA.getName()  << std::endl;
+    
+    PersonDAO personDAO(db);
+    Person persona(1,"ana","susana", "2020", "2120");
+    personDAO.add(persona);
+
+    std::vector<Person> personas = personDAO.getAll();
+
+     for(auto personaA :  personas)
+        std::cout << personaA.getRealName()  << std::endl;
+
+
+
+
+
+
 
 
 
