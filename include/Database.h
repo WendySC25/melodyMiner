@@ -1,19 +1,21 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
-#include <string>
 #include <sqlite3.h>
+#include <string>
 
 class Database {
 public:
-    Database(const std::string &db_name);
+    Database(const std::string &dbPath);
     ~Database();
+
+    sqlite3* getDb() const;
     void createTables();
-    sqlite3* getDb() { return db; }
 
 private:
-    sqlite3 *db;  
-    void executeSQL(const std::string &sql);
+    sqlite3 *db;
+    bool openDatabase(const std::string &dbPath);
+    void closeDatabase();
 };
 
 #endif // DATABASE_H
