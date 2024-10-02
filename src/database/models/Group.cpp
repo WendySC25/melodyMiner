@@ -1,4 +1,4 @@
-#include "Group.h"
+#include "include/database/models/Group.h"
 
 // Constructor
 Group::Group(int id_group, const std::string &name, 
