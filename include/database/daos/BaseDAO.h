@@ -46,9 +46,9 @@ void BaseDAO<T>::add(const T &item) {
 
     bindInsert(stmt, item);
 
-    if (sqlite3_step(stmt) != SQLITE_DONE) {
+    if (sqlite3_step(stmt) != SQLITE_DONE) 
         std::cerr << "Error al insertar: " << sqlite3_errmsg(database.getDb()) << std::endl;
-    }
+    
 
     sqlite3_finalize(stmt);
 }
@@ -128,11 +128,9 @@ void BaseDAO<T>::remove(int id) {
     }
 
     sqlite3_bind_int(stmt, 1, id);
-
-    if (sqlite3_step(stmt) != SQLITE_DONE) {
+    if (sqlite3_step(stmt) != SQLITE_DONE) 
         std::cerr << "Error al eliminar: " << sqlite3_errmsg(database.getDb()) << std::endl;
-    }
-
+    
     sqlite3_finalize(stmt);
 }
 
