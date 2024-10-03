@@ -30,3 +30,19 @@ std::string PerformerDAO::getUpdateQuery() const {
 std::string PerformerDAO::getSelectByIdQuery() const {
     return "SELECT * FROM performers WHERE id_performer = ?;";
 }
+
+
+
+
+void PerformerDAO::bindAttribute(sqlite3_stmt *stmt, std::string attributeValue)  {
+   sqlite3_bind_text(stmt, 1, attributeValue.c_str(), -1, SQLITE_STATIC);
+}
+
+std::string PerformerDAO::getSelectByAttibute() const {
+    return "SELECT id_performer FROM performers WHERE name = ?;";
+}
+
+
+int PerformerDAO::getIdByAttribute(const std::string &attributeValue) {
+    return BaseDAO<Performer>::getIdByAttribute(attributeValue);
+}
