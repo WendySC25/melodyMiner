@@ -1,11 +1,17 @@
 project('melodyMiner', 'cpp',
     default_options : ['cpp_std=c++17'])
 
-
-srcs = [
-    'src/main.cpp',
+# Components
+mining_srcs = [
     'src/mining/Miner.cpp',
+]
+
+utils_srcs = [
     'src/utils/ID3Tag.cpp',
+    'src/utils/ConfigurationFile.cpp',
+]
+
+database_srcs = [
     'src/database/Database.cpp',
     'src/database/daos/AlbumDAO.cpp',
     'src/database/models/Album.cpp',
@@ -19,6 +25,11 @@ srcs = [
     'src/database/models/Rola.cpp',
 ]
 
+srcs = [
+    'src/main.cpp',
+] + mining_srcs + utils_srcs + database_srcs
+
+# Define dependencies
 taglib_dep = dependency('taglib', required: true)
 gtkmm_dep = dependency('gtkmm-4.0', version: '>= 4.6.0')
 sqlite_dep = dependency('sqlite3', required: true)
@@ -28,16 +39,12 @@ executable('melodyMiner', srcs,
     link_args : ['-L/opt/homebrew/Cellar/taglib/1.13.1/lib', '-ltag', '-ltag_c']
 )
 
+# agahsg
 simple_srcs = [
     'src/gui/simple.cpp',
 ]
 
-# Ejecutable para el programa simple
 executable('my_program', simple_srcs,
     dependencies: gtkmm_dep,
     win_subsystem: 'windows',
 )
-
-
-
-
