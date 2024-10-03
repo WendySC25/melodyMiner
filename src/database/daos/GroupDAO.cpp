@@ -34,3 +34,14 @@ std::string GroupDAO::getUpdateQuery() const {
 std::string GroupDAO::getSelectByIdQuery() const {
     return "SELECT * FROM groups WHERE id_group = ?;";
 }
+
+
+
+
+void GroupDAO::bindAttribute(sqlite3_stmt *stmt, std::string attributeValue)  {
+   sqlite3_bind_text(stmt, 1, attributeValue.c_str(), -1, SQLITE_STATIC);
+}
+
+std::string GroupDAO::getSelectByAttibute() const {
+    return "SELECT id_album FROM albums WHERE name = ?;";
+}

@@ -37,3 +37,15 @@ std::string PersonDAO::getUpdateQuery() const {
 std::string PersonDAO::getSelectByIdQuery() const {
     return "SELECT * FROM persons WHERE id_person = ?;";
 }
+
+
+
+
+
+void PersonDAO::bindAttribute(sqlite3_stmt *stmt, std::string attributeValue)  {
+   sqlite3_bind_text(stmt, 1, attributeValue.c_str(), -1, SQLITE_STATIC);
+}
+
+std::string PersonDAO::getSelectByAttibute() const {
+    return "SELECT id_album FROM albums WHERE name = ?;";
+}

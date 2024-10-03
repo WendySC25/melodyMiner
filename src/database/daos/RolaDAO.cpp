@@ -46,3 +46,15 @@ std::string RolaDAO::getUpdateQuery() const {
 std::string RolaDAO::getSelectByIdQuery() const {
     return "SELECT * FROM rolas WHERE id_rola = ?;";
 }
+
+
+
+
+
+void RolaDAO::bindAttribute(sqlite3_stmt *stmt, std::string attributeValue)  {
+   sqlite3_bind_text(stmt, 1, attributeValue.c_str(), -1, SQLITE_STATIC);
+}
+
+std::string RolaDAO::getSelectByAttibute() const {
+    return "SELECT id_album FROM albums WHERE name = ?;";
+}

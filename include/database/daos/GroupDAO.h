@@ -15,6 +15,9 @@ protected:
     std::string getInsertQuery() const override;
     std::string getUpdateQuery() const override;
     std::string getSelectByIdQuery() const override;
+
+    void bindAttribute(sqlite3_stmt *stmt, std::string attributeValue) override;
+    std::string getSelectByAttibute() const override;
 };
 
 #endif
