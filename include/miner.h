@@ -13,6 +13,7 @@ class Miner {
         Miner(const std::string& dir) : directory(dir) {}
         void findMusicFiles(const std::string& directory);
         void mineTags();
+        std::vector<std::unique_ptr<ID3Tag>>& getTags() { return tags; }
 
     private:
         std::string directory;
