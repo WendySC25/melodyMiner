@@ -6,6 +6,8 @@
 class RolaDAO : public BaseDAO<Rola> {
 public:
     RolaDAO(Database &db);
+    int getIdByAttribute(const std::string &attributeValue) override;
+
 
 protected:
     void bindInsert(sqlite3_stmt *stmt, const Rola &rola) override;

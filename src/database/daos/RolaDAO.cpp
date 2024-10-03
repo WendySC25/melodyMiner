@@ -56,5 +56,9 @@ void RolaDAO::bindAttribute(sqlite3_stmt *stmt, std::string attributeValue)  {
 }
 
 std::string RolaDAO::getSelectByAttibute() const {
-    return "SELECT id_album FROM albums WHERE name = ?;";
+    return "SELECT id_rola FROM rolas WHERE path = ?;";
+}
+
+int RolaDAO::getIdByAttribute(const std::string &attributeValue) {
+    return BaseDAO<Rola>::getIdByAttribute(attributeValue);
 }
