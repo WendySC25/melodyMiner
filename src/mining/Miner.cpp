@@ -67,8 +67,9 @@ void Miner::mineTags() {
                 (artist && artist[0] != '\0') ? std::string(artist) : "Unknown",
                 (album && album[0] != '\0') ? std::string(album) : "Unknown",
                 (genre && genre[0] != '\0') ? std::string(genre) : "Unknown",
-                static_cast<int>(track),
-                static_cast<int>(year)
+                (track > 0) ? static_cast<int>(track) : 0,  
+                (year > 0) ? static_cast<int>(year) : 2024,
+                filePath
             );
 
             tags.push_back(std::move(newTag));
@@ -89,3 +90,4 @@ void Miner::mineTags() {
         taglib_file_free(file);
     }
 }
+

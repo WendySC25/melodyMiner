@@ -3,8 +3,8 @@
 
 
 ID3Tag::ID3Tag(const std::string& title, const std::string& artist, const std::string& album, const std::string& genre,
-               int track, int year)
-    : title(title), artist(artist), album(album), genre(genre), track(track), year(year) {}
+               int track, int year, const std::string& path)
+    : title(title), artist(artist), album(album), genre(genre), track(track), year(year), path(path) {}
 
 ID3Tag::~ID3Tag() {
   
@@ -33,3 +33,9 @@ int ID3Tag::getTrack() const {
 int ID3Tag::getYear() const {
     return year;
 }
+
+
+const std::string& ID3Tag::getPath() const {
+    return path;
+}
+

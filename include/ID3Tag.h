@@ -7,7 +7,7 @@
 class ID3Tag {
 public:
     ID3Tag(const std::string& title, const std::string& artist, const std::string& album, const std::string& genre,
-           int track, int year);
+           int track, int year, const std::string& path);
     ~ID3Tag(); // Destructor declaration
 
     const std::string& getTitle() const;
@@ -17,6 +17,8 @@ public:
     int getTrack() const;
     int getYear() const;
 
+    const std::string& getPath() const;
+
 private:
     std::string title;   // TIT2
     std::string artist;  // TPE1
@@ -24,6 +26,8 @@ private:
     std::string genre;   // TCON
     int track;           // TRCK
     int year;            // TDRC
+
+    std::string path;
 };
 
 #endif // ID3TAG_H

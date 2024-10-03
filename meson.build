@@ -8,6 +8,7 @@ mining_srcs = [
 
 utils_srcs = [
     'src/utils/ID3Tag.cpp',
+    'src/utils/ID3TagManager.cpp',
     'src/utils/ConfigurationFile.cpp',
 ]
 
