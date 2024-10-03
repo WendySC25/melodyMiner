@@ -34,3 +34,16 @@ std::string AlbumDAO::getUpdateQuery() const {
 std::string AlbumDAO::getSelectByIdQuery() const {
     return "SELECT * FROM albums WHERE id_album = ?;";
 }
+
+
+void AlbumDAO::bindAttribute(sqlite3_stmt *stmt, std::string attributeValue)  {
+   sqlite3_bind_text(stmt, 1, attributeValue.c_str(), -1, SQLITE_STATIC);
+}
+
+std::string AlbumDAO::getSelectByAttibute() const {
+    return "SELECT id_album FROM albums WHERE name = ?;";
+}
+
+int AlbumDAO::getIdByAttribute(const std::string &attributeValue) {
+    return BaseDAO<Album>::getIdByAttribute(attributeValue);
+}

@@ -19,16 +19,22 @@ public:
     void update(const T &item);
     void remove(int id);
 
+    virtual int getIdByAttribute(const std::string &attributeValue) = 0;
+
 protected:
     virtual void bindInsert(sqlite3_stmt *stmt, const T &item) = 0;
     virtual void bindUpdate(sqlite3_stmt *stmt, const T &item) = 0;
     virtual void fillObject(sqlite3_stmt *stmt, T &item) = 0;
 
+    virtual void bindAttribute(sqlite3_stmt *stmt, std::string attributeValue) = 0;
+
     virtual std::string getInsertQuery() const = 0;
     virtual std::string getUpdateQuery() const = 0;
     virtual std::string getSelectByIdQuery() const = 0;
 
-private:
+    virtual std::string getSelectByAttibute() const = 0;
+    
+
     Database &database;
     std::string tableName;
 };
@@ -36,6 +42,7 @@ private:
 
 template <typename T>
 void BaseDAO<T>::add(const T &item) {
+
     std::string sql = getInsertQuery();
     sqlite3_stmt *stmt;
 
@@ -133,6 +140,30 @@ void BaseDAO<T>::remove(int id) {
     
     sqlite3_finalize(stmt);
 }
+
+template <typename T>
+int BaseDAO<T>::getIdByAttribute(const std::string &attributeValue) {
+        std::string sql = getSelectByAttibute();
+        sqlite3_stmt *stmt;
+
+        if (sqlite3_prepare_v2(database.getDb(), sql.c_str(), -1, &stmt, nullptr) != SQLITE_OK) {
+            std::cerr << "Error al preparar la consulta: " << sqlite3_errmsg(database.getDb()) << std::endl;
+            return -1; 
+        }
+
+        bindAttribute(stmt, attributeValue);
+
+        if (sqlite3_step(stmt) == SQLITE_ROW) {
+            int id = sqlite3_column_int(stmt, 0); 
+            sqlite3_finalize(stmt);
+            return id;
+        }
+
+        sqlite3_finalize(stmt);
+        std::cerr << "Elemento no encontrado con valor de atributo: " << attributeValue << std::endl;
+        return -1;
+}
+
 
 
 #endif // BASEDAO_H
