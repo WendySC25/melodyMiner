@@ -1,4 +1,4 @@
-project('melodyMiner', 'cpp',
+project('melodyMiner', 'cpp', 'c',
     default_options : ['cpp_std=c++17'])
 
 # Components
@@ -42,10 +42,26 @@ executable('melodyMiner', srcs,
 
 # agahsg
 simple_srcs = [
-    'src/gui/simple.cpp',
+    'src/gui/simple2.cpp',
 ]
 
 executable('my_program', simple_srcs,
     dependencies: gtkmm_dep,
     win_subsystem: 'windows',
 )
+
+# Test
+test_srcs = [
+    'test/testQuery.c',
+]
+
+unity_srcs = [
+    'third_party/unity/src/unity.c',
+]
+
+unity_lib = static_library('unity', unity_srcs)
+
+test_exe = executable('test_my_code', test_srcs,
+                      link_with: unity_lib)
+
+test('unit_test', test_exe)
