@@ -52,19 +52,16 @@ std::string processQuery(const std::string& query) {
     std::vector<std::string> conditions;
 
     try {
-    
-        conditions.push_back(getCondition("title", query, "r.title"));
 
+        conditions.push_back(getCondition("title", query, "r.title"));
         for(int i=0; i < conditions.size(); i++){
             if (sqlQuery.find("WHERE") == std::string::npos && conditions[i] != "") sqlQuery += " WHERE (" + conditions[i] + ")"; 
             else if (sqlQuery.find("WHERE") != std::string::npos && conditions[i] != "") sqlQuery += " AND (" + conditions[i] + ")"; 
         }
 
-
     } catch (const std::regex_error& e) {
         std::cerr << "Regex error: " << e.what() << std::endl;
         return "";
     }
-
     return sqlQuery+";";
 }
