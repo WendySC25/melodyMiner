@@ -1,4 +1,4 @@
-project('melodyMiner', 'cpp', 'c',
+project('melodyMiner', 'cpp',
     default_options : ['cpp_std=c++17'])
 
 # Components
@@ -52,16 +52,15 @@ executable('my_program', simple_srcs,
 
 # Test
 test_srcs = [
-    'test/testQuery.c',
+    'test/testQuery.cpp',
+    'src/query/queryProcessor.cpp',  
 ]
 
-unity_srcs = [
-    'third_party/unity/src/unity.c',
-]
+# Dependencia de Google Test
+gtest_dep = dependency('gtest', required: true)
 
-unity_lib = static_library('unity', unity_srcs)
+# Crear el ejecutable para las pruebas
+test_exe = executable('test_my_code', test_srcs, dependencies: [gtest_dep])
 
-test_exe = executable('test_my_code', test_srcs,
-                      link_with: unity_lib)
-
+# Definir el test en Meson
 test('unit_test', test_exe)
