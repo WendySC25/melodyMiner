@@ -39,7 +39,6 @@ std::string getCondition(const std::string& field, const std::string& query, con
                 else if (hasAnd) condition = join(elementList, " AND "); 
                 else condition = elementList.front(); 
             }
-
         }
 
     return condition;
@@ -51,14 +50,18 @@ std::string processQuery(const std::string& query) {
     std::string sqlQuery = "SELECT * FROM rolas r";
     std::vector<std::string> conditions;
     bool hasAlbums = false;
+    bool hasPerformers = false;
 
     try {
-
         conditions.push_back(getCondition("title", query, "r.title"));
         conditions.push_back(getCondition("album", query, "a.name"));
+        conditions.push_back(getCondition("performer", query, "p.name"));
 
         hasAlbums      = (conditions[1] != "");
         if(hasAlbums) sqlQuery += " JOIN albums a ON r.id_album = a.id_album";
+
+       hasPerformers  = (conditions[2] != "");
+        if(hasPerformers) sqlQuery += " JOIN performers p ON r.id_performer = p.id_performer";
 
         for(int i=0; i < conditions.size(); i++){
             if (sqlQuery.find("WHERE") == std::string::npos && conditions[i] != "") sqlQuery += " WHERE (" + conditions[i] + ")"; 
