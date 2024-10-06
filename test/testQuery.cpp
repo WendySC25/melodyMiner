@@ -36,6 +36,23 @@ TEST(QueryProcessorTest, AlbumQueries) {
     EXPECT_EQ(expected, resultado);
 }
 
+TEST(QueryProcessorTest, PerformerQueries) {
+    const char* input = "performer[John Doe]"; 
+    std::string expected = "SELECT * FROM rolas r JOIN performers p ON r.id_performer = p.id_performer WHERE (p.name LIKE '%John Doe%');";
+    std::string resultado = processQuery(input);
+    EXPECT_EQ(expected, resultado);  
+
+    input = "performer[fire|Jane Doe]";
+    expected = "SELECT * FROM rolas r JOIN performers p ON r.id_performer = p.id_performer WHERE (p.name LIKE '%fire%' OR p.name LIKE '%Jane Doe%');";
+    resultado = processQuery(input);
+    EXPECT_EQ(expected, resultado);
+
+    input = "performer[fire&Jane Doe]";
+    expected = "SELECT * FROM rolas r JOIN performers p ON r.id_performer = p.id_performer WHERE (p.name LIKE '%fire%' AND p.name LIKE '%Jane Doe%');";
+    resultado = processQuery(input);
+    EXPECT_EQ(expected, resultado);
+}
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
