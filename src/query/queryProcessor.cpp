@@ -50,10 +50,16 @@ std::string getCondition(const std::string& field, const std::string& query, con
 std::string processQuery(const std::string& query) {
     std::string sqlQuery = "SELECT * FROM rolas r";
     std::vector<std::string> conditions;
+    bool hasAlbums = false;
 
     try {
 
         conditions.push_back(getCondition("title", query, "r.title"));
+        conditions.push_back(getCondition("album", query, "a.name"));
+
+        hasAlbums      = (conditions[1] != "");
+        if(hasAlbums) sqlQuery += " JOIN albums a ON r.id_album = a.id_album";
+
         for(int i=0; i < conditions.size(); i++){
             if (sqlQuery.find("WHERE") == std::string::npos && conditions[i] != "") sqlQuery += " WHERE (" + conditions[i] + ")"; 
             else if (sqlQuery.find("WHERE") != std::string::npos && conditions[i] != "") sqlQuery += " AND (" + conditions[i] + ")"; 
@@ -62,6 +68,6 @@ std::string processQuery(const std::string& query) {
     } catch (const std::regex_error& e) {
         std::cerr << "Regex error: " << e.what() << std::endl;
         return "";
-    }
+    }   
     return sqlQuery+";";
 }
