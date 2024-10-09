@@ -47,8 +47,13 @@ void Miner::findMusicFiles(const std::string& directory) {
 }
 
 void Miner::mineTags(const std::function<void(double)>& progressCallback) {
+
+    Database db("db/music_database.db");  
+    ID3TagManager tagManager(db);
+
     tags.reserve(file_paths.size());  
     size_t totalFiles = file_paths.size(); 
+
     std::cout << " ::::::::::::::::::::::: TAGS " << std::endl;
     for (size_t i = 0; i < totalFiles; ++i) {
         const auto& filePath = file_paths[i];
@@ -79,15 +84,7 @@ void Miner::mineTags(const std::function<void(double)>& progressCallback) {
                 filePath
             );
 
-            tags.push_back(std::move(newTag));
-
-            // std::cout << "Título: " << tags.back()->getTitle() << std::endl;
-            // std::cout << "Artista: " << tags.back()->getArtist() << std::endl;
-            // std::cout << "Álbum: " << tags.back()->getAlbum() << std::endl;
-            // std::cout << "Género: " << tags.back()->getGenre() << std::endl;
-            // std::cout << "Año: " << tags.back()->getYear() << std::endl;
-            // std::cout << "Número de pista: " << tags.back()->getTrack() << std::endl;
-            // std::cout << std::endl;
+            tagManager.addTagsToDatabase(newTag);
 
 
         } else {
@@ -97,8 +94,6 @@ void Miner::mineTags(const std::function<void(double)>& progressCallback) {
         taglib_file_free(file);
 
         double progress = static_cast<double>(i + 1) / totalFiles;
-        
-        std::cout << "\rProgreso: " << progress << "%  " << std::flush; 
         progressCallback(progress);
     }
     std::cout << std::endl; 

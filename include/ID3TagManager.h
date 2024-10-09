@@ -9,7 +9,7 @@
 class ID3TagManager {
 public:
     ID3TagManager(Database& db);
-    void addTagsToDatabase(const std::vector<std::unique_ptr<ID3Tag>>& tags);
+    void addTagsToDatabase(const std::unique_ptr<ID3Tag>& tagPtr);
 
 private:
     AlbumDAO albumDAO; 
