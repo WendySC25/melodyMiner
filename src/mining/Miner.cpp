@@ -4,9 +4,13 @@
 #include <iostream>
 #include <memory>
 
+#include <iomanip>
+
 #include <dirent.h>
 #include <sys/stat.h>
 #include <cstring>
+
+#include <functional>
 
 
 #include <taglib/tag_c.h>
@@ -35,16 +39,19 @@ void Miner::findMusicFiles(const std::string& directory) {
             findMusicFiles(fullPath);
         } else if (entry->d_type == DT_REG && fullPath.substr(fullPath.find_last_of(".") + 1) == "mp3") {
             file_paths.push_back(fullPath);
-            std::cout << "Archivo encontrado: " << fullPath << std::endl;
+            // std::cout << "Archivo encontrado: " << fullPath << std::endl;
         }
     }
 
     closedir(dir);
 }
 
-void Miner::mineTags() {
+void Miner::mineTags(const std::function<void(double)>& progressCallback) {
     tags.reserve(file_paths.size());  
-    for (const auto& filePath : file_paths) {
+    size_t totalFiles = file_paths.size(); 
+    std::cout << " ::::::::::::::::::::::: TAGS " << std::endl;
+    for (size_t i = 0; i < totalFiles; ++i) {
+        const auto& filePath = file_paths[i];
 
         TagLib_File *file = taglib_file_new(filePath.c_str());
         if (!file) {
@@ -74,13 +81,13 @@ void Miner::mineTags() {
 
             tags.push_back(std::move(newTag));
 
-            std::cout << "Título: " << tags.back()->getTitle() << std::endl;
-            std::cout << "Artista: " << tags.back()->getArtist() << std::endl;
-            std::cout << "Álbum: " << tags.back()->getAlbum() << std::endl;
-            std::cout << "Género: " << tags.back()->getGenre() << std::endl;
-            std::cout << "Año: " << tags.back()->getYear() << std::endl;
-            std::cout << "Número de pista: " << tags.back()->getTrack() << std::endl;
-            std::cout << std::endl;
+            // std::cout << "Título: " << tags.back()->getTitle() << std::endl;
+            // std::cout << "Artista: " << tags.back()->getArtist() << std::endl;
+            // std::cout << "Álbum: " << tags.back()->getAlbum() << std::endl;
+            // std::cout << "Género: " << tags.back()->getGenre() << std::endl;
+            // std::cout << "Año: " << tags.back()->getYear() << std::endl;
+            // std::cout << "Número de pista: " << tags.back()->getTrack() << std::endl;
+            // std::cout << std::endl;
 
 
         } else {
@@ -88,6 +95,13 @@ void Miner::mineTags() {
         }
 
         taglib_file_free(file);
+
+        double progress = static_cast<double>(i + 1) / totalFiles;
+        
+        std::cout << "\rProgreso: " << progress << "%  " << std::flush; 
+        progressCallback(progress);
     }
+    std::cout << std::endl; 
+    std::cout << std::endl; 
 }
 
