@@ -13,7 +13,7 @@ public:
     BaseDAO(Database &db, const std::string &tableName) 
         : database(db), tableName(tableName) {}
 
-    void add(const T &item);
+    int add(const T &item);
     std::vector<T> getAll();
     T getById(int id);
     void update(const T &item);
@@ -41,23 +41,27 @@ protected:
 
 
 template <typename T>
-void BaseDAO<T>::add(const T &item) {
+int BaseDAO<T>::add(const T &item) {
 
     std::string sql = getInsertQuery();
     sqlite3_stmt *stmt;
 
     if (sqlite3_prepare_v2(database.getDb(), sql.c_str(), -1, &stmt, nullptr) != SQLITE_OK) {
         std::cerr << "Error al preparar la consulta: " << sqlite3_errmsg(database.getDb()) << std::endl;
-        return;
+        return -1;
     }
 
     bindInsert(stmt, item);
 
-    if (sqlite3_step(stmt) != SQLITE_DONE) 
+    if (sqlite3_step(stmt) != SQLITE_DONE) {
         std::cerr << "Error al insertar: " << sqlite3_errmsg(database.getDb()) << std::endl;
+        return -1;
+    }
     
-
+    int lastInsertId = static_cast<int>(sqlite3_last_insert_rowid(database.getDb()));
     sqlite3_finalize(stmt);
+    return lastInsertId; 
+
 }
 
 template <typename T>
@@ -160,7 +164,7 @@ int BaseDAO<T>::getIdByAttribute(const std::string &attributeValue) {
         }
 
         sqlite3_finalize(stmt);
-        std::cerr << "Elemento no encontrado con valor de atributo: " << attributeValue << std::endl;
+        //std::cerr << "Elemento no encontrado con valor de atributo: " << attributeValue << std::endl;
         return -1;
 }
 

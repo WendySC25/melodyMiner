@@ -41,7 +41,7 @@ void AlbumDAO::bindAttribute(sqlite3_stmt *stmt, std::string attributeValue)  {
 }
 
 std::string AlbumDAO::getSelectByAttibute() const {
-    return "SELECT id_album FROM albums WHERE path = ?;";
+    return "SELECT id_album FROM albums WHERE name = ?;";
 }
 
 int AlbumDAO::getIdByAttribute(const std::string &attributeValue) {

@@ -48,15 +48,13 @@ std::string RolaDAO::getSelectByIdQuery() const {
 }
 
 
-
-
-
 void RolaDAO::bindAttribute(sqlite3_stmt *stmt, std::string attributeValue)  {
-   sqlite3_bind_text(stmt, 1, attributeValue.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 1, attributeValue.c_str(), -1, SQLITE_STATIC);
 }
 
 std::string RolaDAO::getSelectByAttibute() const {
-    return "SELECT id_rola FROM rolas WHERE path = ?;";
+    // ALGO ESTA MAL CON EL PATH
+    return "SELECT id_rola FROM rolas WHERE title = ?;";
 }
 
 int RolaDAO::getIdByAttribute(const std::string &attributeValue) {
