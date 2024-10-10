@@ -42,18 +42,31 @@ executable('melodyMiner', srcs,
 
 # agahsg
 simple_srcs = [
-    'src/gui/simple2.cpp',
+    'src/gui/main.cc',
+    'src/gui/examplewindow.cc',
+    'src/database/models/Rola.cpp',
+    'src/database/Database.cpp',
+    'src/database/daos/RolaDAO.cpp', 
+    'src/gui/RolaDetailview.cc',   
+    'src/gui/MinerDialog.cc',  
+    'src/query/queryProcessor.cpp',  
+    'src/gui/dialog/FormatEditRola.cc',
+    'src/gui/dialog/RolaController.cc',
 ]
 
-executable('my_program', simple_srcs,
-    dependencies: gtkmm_dep,
+all_src = simple_srcs + utils_srcs + database_srcs + mining_srcs
+
+executable('my_program', all_src,
+    dependencies: [gtkmm_dep, sqlite_dep, taglib_dep],
     win_subsystem: 'windows',
+    link_args : ['-L/opt/homebrew/Cellar/taglib/1.13.1/lib', '-ltag', '-ltag_c']
 )
 
 # Test
 test_srcs = [
     'test/testQuery.cpp',
     'src/query/queryProcessor.cpp',  
+
 ]
 
 # Dependencia de Google Test

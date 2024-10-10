@@ -1,0 +1,46 @@
+/* style.css */
+
+/* Estilo para la ventana principal */
+window {
+    background-color: #171719; /* Fondo negro */
+}
+
+/* Estilo para el GtkBox (vbox) */
+.h-box {
+    background-color: #212124; /* Gris claro */
+}
+
+.image-box {
+    background-image: url("../../assets/backg.jpg");
+    background-size: cover; /* O "contain" dependiendo del efecto deseado */
+    background-position: center;
+    
+}
+
+
+/* Estilo para el botón */
+button {
+    background-color: #eb4242; /* Color de fondo del botón */
+    color: rgb(147, 227, 199); /* Color del texto */
+    padding: 10px 20px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
+}
+
+button.search-button {
+    background-color: #9dd774; /* Color de fondo negro para el botón de búsqueda */
+    color: black; /* Asegúrate de que el texto sea negro */
+}
+
+
+/* Estilo para las etiquetas */
+label {
+    /*font-weight: bold;  Texto en negrita */
+    color: #FFFFFF; /* Color blanco para el texto de las etiquetas */
+}
+
+/* Estilo para el GridView */
+.grid-view {
+    background-color: #171719; /* Fondo gris oscuro para el GridView */
+}

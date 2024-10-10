@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <object class="GtkWindow" id="main_window">
+    <property name="title" translatable="yes">Mi App</property>
+    <property name="default_width">800</property>
+    <property name="default_height">600</property>
+    <property name="hide_on_close">True</property>
+    <child>
+      <object class="GtkPaned" id="my_paned">
+        <property name="orientation">horizontal</property>
+
+        <child>
+          <object class="GtkBox" id="sidebar">
+            <property name="orientation">vertical</property>
+            <property name="spacing">10</property>
+            <child>
+              <object class="GtkButton" id="button1">
+                <property name="label" translatable="yes">Opción 1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button2">
+                <property name="label" translatable="yes">Opción 2</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button3">
+                <property name="label" translatable="yes">Opción 3</property>
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkGrid" id="my_grid">
+            <property name="row_spacing">10</property>
+            <property name="column_spacing">10</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <object class="GtkWindow" id="main_window">
+    <property name="title" translatable="yes">Mi App</property>
+    <property name="default_width">800</property>
+    <property name="default_height">600</property>
+    <property name="hide_on_close">True</property>
+    <child>
+      <object class="GtkPaned" id="my_paned">
+        <property name="orientation">horizontal</property>
+
+        <child>
+          <object class="GtkBox" id="sidebar">
+            <property name="orientation">vertical</property>
+            <property name="spacing">10</property>
+            <child>
+              <object class="GtkButton" id="button1">
+                <property name="label" translatable="yes">Opción 1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button2">
+                <property name="label" translatable="yes">Opción 2</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button3">
+                <property name="label" translatable="yes">Opción 3</property>
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkGrid" id="my_grid">
+            <property name="row_spacing">10</property>
+            <property name="column_spacing">10</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
