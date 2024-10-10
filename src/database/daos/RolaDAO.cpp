@@ -33,6 +33,17 @@ void RolaDAO::fillObject(sqlite3_stmt *stmt, Rola &rola) {
     rola.setTrack(sqlite3_column_int(stmt, 5));
     rola.setYear(sqlite3_column_int(stmt, 6));
     rola.setGenre(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 7)));
+
+    AlbumDAO albumDAO(database);
+    Album album = albumDAO.getById(sqlite3_column_int(stmt, 2));
+    std::shared_ptr<Album> albumPtr = std::make_shared<Album>(album);
+    rola.setAlbum(albumPtr);
+
+    PerformerDAO performerDAO(database);
+    Performer perfomer = performerDAO.getById(sqlite3_column_int(stmt, 1));
+    std::shared_ptr<Performer> performerPtr = std::make_shared<Performer>(perfomer);
+    rola.setPerformer(performerPtr);
+    
 }
 
 std::string RolaDAO::getInsertQuery() const {
@@ -59,4 +70,21 @@ std::string RolaDAO::getSelectByAttibute() const {
 
 int RolaDAO::getIdByAttribute(const std::string &attributeValue) {
     return BaseDAO<Rola>::getIdByAttribute(attributeValue);
+}
+
+
+std::vector<Rola> RolaDAO::executeQuery(const std::string& query) {
+    std::vector<Rola> rolas;
+    sqlite3_stmt* stmt;
+    if (sqlite3_prepare_v2(database.getDb(), query.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            Rola rola;
+            fillObject(stmt, rola); 
+            rolas.push_back(rola);  
+        }
+        sqlite3_finalize(stmt);
+    } else {
+        std::cerr << "Error preparing statement: " << sqlite3_errmsg(database.getDb()) << std::endl;
+    }
+    return rolas; 
 }

@@ -16,6 +16,9 @@ int Rola::getTrack() const { return track; }
 int Rola::getYear() const { return year; }
 std::string Rola::getGenre() const { return genre; }
 
+std::shared_ptr<Performer> Rola::getPerformer() const { return performer; }
+std::shared_ptr<Album> Rola::getAlbum() const { return album; }
+
 // Setters
 void Rola::setIdRola(int id_rola) { this->id_rola = id_rola; }
 void Rola::setIdPerformer(int id_performer) { this->id_performer = id_performer; }
@@ -25,3 +28,6 @@ void Rola::setTitle(const std::string &title) { this->title = title; }
 void Rola::setTrack(int track) { this->track = track; }
 void Rola::setYear(int year) { this->year = year; }
 void Rola::setGenre(const std::string &genre) { this->genre = genre; }
+
+void Rola::setPerformer(std::shared_ptr<Performer> performer) { this->performer = performer; }
+void Rola::setAlbum(std::shared_ptr<Album> album) { this->album = album; }

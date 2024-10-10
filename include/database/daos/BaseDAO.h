@@ -31,7 +31,6 @@ protected:
     virtual std::string getInsertQuery() const = 0;
     virtual std::string getUpdateQuery() const = 0;
     virtual std::string getSelectByIdQuery() const = 0;
-
     virtual std::string getSelectByAttibute() const = 0;
     
 

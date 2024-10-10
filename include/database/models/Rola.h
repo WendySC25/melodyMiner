@@ -1,7 +1,10 @@
 #ifndef ROLA_H
 #define ROLA_H
 
+#include <include/database/models/Album.h>
+#include <include/database/models/Performer.h>
 #include <string>
+#include <memory>
 
 class Rola {
 
@@ -19,6 +22,9 @@ public:
     int getYear() const;
     std::string getGenre() const;
 
+    std::shared_ptr<Performer> getPerformer() const;
+    std::shared_ptr<Album> getAlbum() const;
+
     // Setters
     void setIdRola(int id_rola);
     void setIdPerformer(int id_performer);
@@ -29,6 +35,10 @@ public:
     void setYear(int year);
     void setGenre(const std::string &genre);
 
+    void setPerformer(std::shared_ptr<Performer> performer);
+    void setAlbum(std::shared_ptr<Album> album);
+
+
 private:
     int id_rola;
     int id_performer;
@@ -38,6 +48,9 @@ private:
     int track;
     int year;
     std::string genre;
+
+    std::shared_ptr<Performer> performer; 
+    std::shared_ptr<Album> album; 
 
 };
 

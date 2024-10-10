@@ -7,6 +7,7 @@ class RolaDAO : public BaseDAO<Rola> {
 public:
     RolaDAO(Database &db);
     int getIdByAttribute(const std::string &attributeValue) override;
+    std::vector<Rola> executeQuery(const std::string& query);
 
 
 protected:
