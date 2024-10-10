@@ -17,12 +17,13 @@
 #include <taglib/fileref.h>
 #include <taglib/tag.h>
 
+Miner::Miner() : m_shall_stop(false), m_has_stopped(false), m_fraction_done(0.0) {}
 
 void Miner::findMusicFiles(const std::string& directory) {
     DIR* dir = opendir(directory.c_str());
     if (!dir) {
-        perror("Failed to open directory");
-        return;
+        std::cerr << "Failed to open directory: " << directory << " (" << strerror(errno) << ")" << std::endl;
+        return; // Salir si no se puede abrir el directorio
     }
 
     struct dirent* entry;
@@ -33,38 +34,49 @@ void Miner::findMusicFiles(const std::string& directory) {
 
         std::string fullPath = directory + "/" + entry->d_name;
         struct stat path_stat;
-        stat(fullPath.c_str(), &path_stat);
+        if (stat(fullPath.c_str(), &path_stat) != 0) {
+            std::cerr << "Failed to stat file: " << fullPath << " (" << strerror(errno) << ")" << std::endl;
+            continue; 
+        }
 
         if (S_ISDIR(path_stat.st_mode)) {
-            findMusicFiles(fullPath);
+            findMusicFiles(fullPath); // Recursivamente buscar en subdirectorios
         } else if (entry->d_type == DT_REG && fullPath.substr(fullPath.find_last_of(".") + 1) == "mp3") {
+            std::lock_guard<std::mutex> lock(m_Mutex);
             file_paths.push_back(fullPath);
-            // std::cout << "Archivo encontrado: " << fullPath << std::endl;
         }
     }
 
     closedir(dir);
 }
 
+
 void Miner::mineTags(const std::function<void(double)>& progressCallback) {
 
     Database db("db/music_database.db");  
     ID3TagManager tagManager(db);
 
-    tags.reserve(file_paths.size());  
     size_t totalFiles = file_paths.size(); 
 
     std::cout << " ::::::::::::::::::::::: TAGS " << std::endl;
     for (size_t i = 0; i < totalFiles; ++i) {
+
+        if (m_shall_stop) {
+            std::lock_guard<std::mutex> lock(m_Mutex);
+            m_has_stopped = true;
+            return; 
+        }
+
         const auto& filePath = file_paths[i];
 
         TagLib_File *file = taglib_file_new(filePath.c_str());
         if (!file) {
-            std::cerr << "Failed to open file: " << filePath << std::endl;
+            // std::cerr << "Failed to open file: " << filePath << std::endl;
             continue;
         }
 
         TagLib_Tag *tag = taglib_file_tag(file);
+
         if (tag) {
 
             const char *title = taglib_tag_title(tag);
@@ -85,18 +97,36 @@ void Miner::mineTags(const std::function<void(double)>& progressCallback) {
             );
 
             tagManager.addTagsToDatabase(newTag);
-
+            taglib_file_free(file);
 
         } else {
-            std::cerr << "Failed to read tag for: " << filePath << std::endl;
+            // std::cerr << "Failed to read tag for: " << filePath << std::endl;
         }
 
-        taglib_file_free(file);
 
         double progress = static_cast<double>(i + 1) / totalFiles;
         progressCallback(progress);
     }
-    std::cout << std::endl; 
-    std::cout << std::endl; 
+    
+    {
+        std::lock_guard<std::mutex> lock(m_Mutex);
+        m_shall_stop = false;
+        m_has_stopped = true;
+    }
+}
+
+void Miner::stopMining() {
+    std::lock_guard<std::mutex> lock(m_Mutex);
+    m_shall_stop = true;
+}
+
+double Miner::getProgress() const {
+    std::lock_guard<std::mutex> lock(m_Mutex);
+    return m_fraction_done;
+}
+
+bool Miner::isStopped() const {
+    std::lock_guard<std::mutex> lock(m_Mutex);
+    return m_has_stopped;
 }
 

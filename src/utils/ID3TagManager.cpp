@@ -14,17 +14,17 @@ void ID3TagManager::addTagsToDatabase(const std::unique_ptr<ID3Tag>& tagPtr) {
             int id_album = albumDAO.getIdByAttribute(newAlbum.getName());
             int id_performer = performerDAO.getIdByAttribute(newPerformer.getName());
 
-            if(id_album != -1) std::cout << "El album ya existe, no se insertará." << std::endl;
+            if(id_album != -1) {} //std::cout << "El album ya existe, no se insertará." << std::endl;
             else id_album = albumDAO.add(newAlbum);
 
-            std::cout << "ID ALBUM." << id_album<<  std::endl;
+            // std::cout << "ID ALBUM." << id_album<<  std::endl;
            
             
 
-            if(id_performer != -1) std::cout << "El perfomer ya existe, no se insertará." << std::endl;
+            if(id_performer != -1) {}//std::cout << "El perfomer ya existe, no se insertará." << std::endl;
             else  id_performer = performerDAO.add(newPerformer);
 
-             std::cout << "ID PERFORMER." << id_performer<<  std::endl;
+            //  std::cout << "ID PERFORMER." << id_performer<<  std::endl;
     
 
             Rola newRola(0,
@@ -40,9 +40,9 @@ void ID3TagManager::addTagsToDatabase(const std::unique_ptr<ID3Tag>& tagPtr) {
             int id_rola = rolaDAO.getIdByAttribute(newRola.getTitle());
             if (id_rola == -1) {
                 id_rola = rolaDAO.add(newRola);
-                std::cout << "Nueva rola insertada con ID: " << id_rola << std::endl;
+                // std::cout << "Nueva rola insertada con ID: " << id_rola << std::endl;
             } else {
-                std::cout << "La rola ya existe, ID: " << id_rola << std::endl;
+                // std::cout << "La rola ya existe, ID: " << id_rola << std::endl;
             }
 
         } else {
