@@ -32,8 +32,6 @@ std::string PerformerDAO::getSelectByIdQuery() const {
 }
 
 
-
-
 void PerformerDAO::bindAttribute(sqlite3_stmt *stmt, std::string attributeValue)  {
    sqlite3_bind_text(stmt, 1, attributeValue.c_str(), -1, SQLITE_STATIC);
 }

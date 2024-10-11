@@ -10,7 +10,7 @@ utils_srcs = [
     'src/utils/ID3Tag.cpp',
     'src/utils/ID3TagManager.cpp',
     'src/utils/ConfigurationFile.cpp',
-    'src/query/queryProcessor.cpp',  
+    'src/utils/QueryProcessor.cpp',  
 ]
 
 database_srcs = [
@@ -62,7 +62,7 @@ executable('my_program', all_src,
 # Test
 test_srcs = [
     'test/testQuery.cpp',
-    'src/query/queryProcessor.cpp',  
+    'src/utils/QueryProcessor.cpp',  
 
 ]
 

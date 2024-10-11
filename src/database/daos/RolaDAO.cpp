@@ -64,7 +64,6 @@ void RolaDAO::bindAttribute(sqlite3_stmt *stmt, std::string attributeValue)  {
 }
 
 std::string RolaDAO::getSelectByAttibute() const {
-    // ALGO ESTA MAL CON EL PATH
     return "SELECT id_rola FROM rolas WHERE title = ?;";
 }
 
@@ -73,7 +72,10 @@ int RolaDAO::getIdByAttribute(const std::string &attributeValue) {
 }
 
 
-std::vector<Rola> RolaDAO::executeQuery(const std::string& query) {
+std::vector<Rola> RolaDAO::executeQuery(const std::string& input) {
+
+    std::string query = processQuery(input);
+
     std::vector<Rola> rolas;
     sqlite3_stmt* stmt;
     if (sqlite3_prepare_v2(database.getDb(), query.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {

@@ -11,12 +11,11 @@ protected:
     void bindInsert(sqlite3_stmt *stmt, const Group &group) override;
     void bindUpdate(sqlite3_stmt *stmt, const Group &group) override;
     void fillObject(sqlite3_stmt *stmt, Group &group) override;
+    void bindAttribute(sqlite3_stmt *stmt, std::string attributeValue) override;
 
     std::string getInsertQuery() const override;
     std::string getUpdateQuery() const override;
     std::string getSelectByIdQuery() const override;
-
-    void bindAttribute(sqlite3_stmt *stmt, std::string attributeValue) override;
     std::string getSelectByAttibute() const override;
 };
 
