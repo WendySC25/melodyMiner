@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <object class="GtkWindow" id="RolaDetailWindow">
+    <property name="title">Detalles de la Rola</property>
+    <property name="default_width">300</property>
+    <property name="default_height">200</property>
+    <child>
+      <object class="GtkBox" id="vbox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkLabel" id="title_label">
+            <property name="label">Título:</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="album_label">
+            <property name="label">Álbum:</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="performer_label">
+            <property name="label">Intérprete:</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="edit_button">
+            <property name="label">Editar</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="delete_button">
+            <property name="label">Eliminar</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="cancel_button">
+            <property name="label">Cancelar</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
