@@ -1,35 +1,44 @@
 #ifndef MINER_H
 #define MINER_H
 
+#include <gtkmm.h>
+
 #include <string>
 #include <vector>
 #include <thread>
 #include <mutex>
 #include <functional>
+
 #include <taglib/tag_c.h>
 #include <taglib/fileref.h>
 #include <taglib/tag.h>
 #include "ID3Tag.h"
+
 #include "include/ID3TagManager.h"
+
+class MinerDialog;
+
 
 class Miner {
 public:
     Miner();
 
+    void mineTags(MinerDialog* caller, std::string directory);
     void findMusicFiles(const std::string& directory);
-    void mineTags(const std::function<void(double)>& progressCallback);
-    void stopMining();
-    
-    double getProgress() const;
-    bool isStopped() const;
+
+    void get_data(double* fraction_done, Glib::ustring* message) const;
+    void stop_work();
+    bool has_stopped() const;
 
 private:
-    mutable std::mutex m_Mutex; 
-    std::vector<std::string> file_paths;
-    bool m_shall_stop; 
-    bool m_has_stopped; 
+    mutable std::mutex m_Mutex;
+    bool m_shall_stop;
+    bool m_has_stopped;
     double m_fraction_done;
+    std::vector<std::string> file_paths;
+    Glib::ustring m_message;
 };
 
 #endif // MINER_H
+
 

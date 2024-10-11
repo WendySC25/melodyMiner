@@ -6,10 +6,10 @@
 
 class RolaController {
 public:
-    RolaController(FormatEditRola& view, Rola& model);
+    RolaController(FormatEditRola* view, Rola& model);
 
 private:
-    FormatEditRola& m_View;
+    FormatEditRola* m_View;
     Rola& m_Model;
 
     void on_dialog_response(int response);

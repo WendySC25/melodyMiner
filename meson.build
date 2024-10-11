@@ -36,17 +36,17 @@ taglib_dep = dependency('taglib', required: true)
 gtkmm_dep = dependency('gtkmm-4.0', version: '>= 4.6.0')
 sqlite_dep = dependency('sqlite3', required: true)
 
-executable('melodyMiner', srcs,
-    dependencies : [taglib_dep, gtkmm_dep, sqlite_dep],
-    link_args : ['-ltag', '-ltag_c']
-)
+#executable('melodyMiner', srcs,
+#    dependencies : [taglib_dep, gtkmm_dep, sqlite_dep],
+#    link_args : ['-ltag', '-ltag_c']
+#)
 
 # agahsg
 gui_srcs = [
     'src/gui/main.cc',
     'src/gui/melodyMinerWindow.cc',
     'src/gui/RolaDetailview.cc',   
-    'src/gui/MinerDialog.cc',  
+    'src/gui/MinerDialog.cc',
     'src/gui/dialog/FormatEditRola.cc',
     'src/gui/dialog/RolaController.cc',
 ]
