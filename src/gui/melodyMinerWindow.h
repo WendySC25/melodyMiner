@@ -8,11 +8,11 @@
 #include <memory>
 #include <array>
 #include <iostream>
+#include <sstream>
 
 #include "src/gui/RolaDetailview.h"
 #include "src/gui/dialog/FormatEditRola.h"
 #include "src/gui/dialog/RolaController.h"
-#include "src/query/queryProcessor.h"
 #include "src/gui/MinerDialog.h"
 #include "include/database/DatabaseUtils.h"
 
@@ -59,6 +59,10 @@ class MelodyMinerWindow : public Gtk::Window{
         Gtk::Entry* m_SearchEntry;
         Gtk::Button* m_SearchButton;
         Gtk::Button* m_SelectFileButton;
+
+        Database database;
+        RolaDAO rolaDAO;
+        
 
         class ModelColumns : public Glib::Object{
             public:

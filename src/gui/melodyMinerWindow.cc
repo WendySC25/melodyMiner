@@ -12,7 +12,8 @@ struct GridEntry {
     int m_track;                   
 };
 
-MelodyMinerWindow::MelodyMinerWindow(){
+MelodyMinerWindow::MelodyMinerWindow() : database("db/music_database.db"), 
+      rolaDAO(database){
 
     auto builder = Gtk::Builder::create_from_file("src/gui/melodyMinerWindow.ui");
 
@@ -24,13 +25,14 @@ MelodyMinerWindow::MelodyMinerWindow(){
     m_SearchEntry      = builder->get_widget<Gtk::Entry>("search_entry");
     m_SearchButton     = builder->get_widget<Gtk::Button>("search_button");
     m_SelectFileButton = builder->get_widget<Gtk::Button>("select_file_button");
-    
+
 
     auto cssProvider = Gtk::CssProvider::create();
     auto file = Gio::File::create_for_path("src/gui/style.css"); 
     cssProvider->load_from_file(file);
     auto display = Gdk::Display::get_default();
     Gtk::StyleContext::add_provider_for_display(display, cssProvider, GTK_STYLE_PROVIDER_PRIORITY_USER);
+
 
     m_MainWindow->set_title("MelodyMiner");
     m_ScrolledWindow->set_expand();
@@ -118,8 +120,8 @@ void MelodyMinerWindow::on_item_activated(unsigned int position){
     detailWindow.show();
     
     /// 
-    auto view = std::make_shared<FormatEditRola>();
-    RolaController controller(*view, rola);
+    // auto view = std::make_shared<FormatEditRola>();
+    // RolaController controller(*view, rola);
 
     std::cout << "Item activated: filename=" << filename
               << ", description=" << description << std::endl;
@@ -161,6 +163,7 @@ void MelodyMinerWindow::add_entry(const std::string& filename,
 }
 
 void MelodyMinerWindow::fillModelFromRolas(const std::vector<Rola>& rolas) {
+
     std::string coverPath = "assets/album_covers/";
 
     int i = 1;
@@ -202,8 +205,6 @@ Gtk::Window* MelodyMinerWindow::get_window() {
 void MelodyMinerWindow::MelodyMinerWindow::on_search_entry_changed(){
     Glib::ustring search_text = m_SearchEntry->get_text();
     if(search_text == "") {
-        Database db("db/music_database.db");
-        RolaDAO rolaDAO(db);
         std::vector<Rola> filteredRolas = rolaDAO.getAll(); 
         updateModelFromRolas(filteredRolas);
     }
@@ -211,15 +212,8 @@ void MelodyMinerWindow::MelodyMinerWindow::on_search_entry_changed(){
 
 void MelodyMinerWindow::on_search_button_clicked(){
     Glib::ustring search_text = m_SearchEntry->get_text();
-   
-
     std::cout << "Texto de búsqueda: " << search_text << std::endl;
-    std::string resultado = processQuery(search_text);
-    std::cout << "Consutal: " << resultado << std::endl;
-
-    Database db("db/music_database.db");
-    RolaDAO rolaDAO(db);
-    std::vector<Rola> filteredRolas = rolaDAO.executeQuery(resultado); 
+    std::vector<Rola> filteredRolas = rolaDAO.executeQuery(search_text); 
     updateModelFromRolas(filteredRolas);
 }
 
@@ -230,7 +224,7 @@ void MelodyMinerWindow::updateModelFromRolas(const std::vector<Rola>& rolas) {
     int i = 1;
     for (const auto& rola : rolas) {
         GridEntry entry;
-        entry.m_filename = "assets/album_covers/" + std::to_string((i % 6)) + ".png"; 
+        entry.m_filename = "assets/album_covers/" + std::to_string((i % 5)) + ".png"; 
         
         std::string name;
 
@@ -244,13 +238,17 @@ void MelodyMinerWindow::updateModelFromRolas(const std::vector<Rola>& rolas) {
         else name = "Unknow";
 
         entry.m_performer = name; 
-
         entry.m_year = rola.getYear();
         entry.m_genre = rola.getGenre();
         entry.m_track = rola.getTrack();
 
-        entry.m_description = "<b>" + rola.getTitle() + " </b> | " + entry.m_performer + "\n" +
-                              entry.m_album;
+        std::ostringstream oss;
+        oss << "<b>" << rola.getTitle() << "</b> | " << entry.m_performer << "\n"
+            << "<i>" << entry.m_album << "</i> (" << entry.m_year << ")\n"
+            << "Track: " << entry.m_track;
+
+        // Asignar la cadena formateada a la descripción
+        entry.m_description = oss.str();
 
         add_entry(entry.m_filename, entry.m_description, rola);
         i = i + 1;

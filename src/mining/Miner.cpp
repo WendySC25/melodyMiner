@@ -98,6 +98,7 @@ void Miner::mineTags(const std::function<void(double)>& progressCallback) {
 
 
         double progress = static_cast<double>(i + 1) / totalFiles;
+        m_fraction_done = progress;
         progressCallback(progress);
     }
     
@@ -109,7 +110,6 @@ void Miner::stopMining() {
 }
 
 double Miner::getProgress() const {
-    std::lock_guard<std::mutex> lock(m_Mutex);
     return m_fraction_done;
 }
 

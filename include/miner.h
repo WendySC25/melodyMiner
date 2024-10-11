@@ -19,16 +19,16 @@ public:
     void findMusicFiles(const std::string& directory);
     void mineTags(const std::function<void(double)>& progressCallback);
     void stopMining();
-
+    
     double getProgress() const;
     bool isStopped() const;
 
 private:
-    mutable std::mutex m_Mutex; // Para sincronizar el acceso a datos compartidos
+    mutable std::mutex m_Mutex; 
     std::vector<std::string> file_paths;
-    bool m_shall_stop; // Indica si debe detenerse
-    bool m_has_stopped; // Indica si ya se detuvo
-    double m_fraction_done; // Progreso actual
+    bool m_shall_stop; 
+    bool m_has_stopped; 
+    double m_fraction_done;
 };
 
 #endif // MINER_H

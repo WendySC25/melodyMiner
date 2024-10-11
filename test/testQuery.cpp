@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <iostream>
-#include "src/query/queryProcessor.h"
+#include "include/QueryProcessor.h"
 
 TEST(QueryProcessorTest, TitleQueries) {
     const char* input = "title[love]"; 

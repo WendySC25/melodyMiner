@@ -20,10 +20,47 @@
                         <property name="width-request">300</property>
 
                         <child>
-                            <object class="GtkLabel" id="info_label">
-                                <property name="label"> </property>
+                            <object class="GtkLabel" id="performer_label">
+                                <property name="label"></property>
+                                <property name="css-classes">performer_label</property>
                             </object>
                         </child>
+                        
+                        <!-- <child>
+                            <object class="GtkLabel" id="album_label">
+                                <property name="label">Album: </property>
+                            </object>
+                        </child>
+
+                        <child>
+                            <object class="GtkLabel" id="path_label">
+                                <property name="label">Path: </property>
+                            </object>
+                        </child>
+
+                        <child>
+                            <object class="GtkLabel" id="title_label">
+                                <property name="label">Title: </property>
+                            </object>
+                        </child>
+
+                        <child>
+                            <object class="GtkLabel" id="track_label">
+                                <property name="label">Track: </property>
+                            </object>
+                        </child>
+
+                        <child>
+                            <object class="GtkLabel" id="year_label">
+                                <property name="label">Year: </property>
+                            </object>
+                        </child>
+
+                        <child>
+                            <object class="GtkLabel" id="genre_label">
+                                <property name="label"> </property>
+                            </object>
+                        </child> -->
 
                     </object>
                 </child>
@@ -62,14 +99,14 @@
                             <child>
                                 <object class="GtkButton" id="search_button">
                                     <property name="label">Serch</property>
-                                    <property name="css-classes">search-button</property>
+                                    <property name="css-classes">search_button</property>
                                     
                                 </object>
                             </child>
 
                             <child>
                                 <object class="GtkButton" id="select_file_button">
-                                    <property name="label">Seleccionar Archivo</property>
+                                    <property name="label">Mine</property>
                                 </object>
                             </child>
 

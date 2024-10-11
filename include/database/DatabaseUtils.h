@@ -15,6 +15,7 @@
 #include "include/database/daos/GroupDAO.h"
 #include "include/database/daos/PersonDAO.h"
 #include "include/database/daos/RolaDAO.h"
+#include "include/QueryProcessor.h"
 
 
 #endif 

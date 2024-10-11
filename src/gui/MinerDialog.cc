@@ -10,22 +10,20 @@ MinerDialog::MinerDialog(Gtk::Window* parent, const std::string path) {
     m_ButtonQuit    = builder->get_widget<Gtk::Button>("quit_button");
 
     m_MainWindow->set_transient_for(*parent);
-
-   
     m_ButtonQuit->signal_clicked().connect(sigc::mem_fun(*this, &MinerDialog::on_quit_button_clicked));
     m_PathLabel->set_text("Mining on " + path);
 
     std::thread mining_thread(&MinerDialog::start_mining, this, path);
     mining_thread.detach(); 
-
     m_MainWindow->show();
 }
 
 void MinerDialog::start_mining(const std::string& path) {
     miner.findMusicFiles(path); 
+
     miner.mineTags([this](double progress) {
         std::cout << "Progreso: " << (progress * 100) << "%" << std::endl;
-        update_progress(progress); 
+        update_progress(miner.getProgress()); 
     });
 
     std::cout << "Mining completed." << std::endl;
@@ -37,6 +35,5 @@ void MinerDialog::update_progress(double fraction) {
 }
 
 void MinerDialog::on_quit_button_clicked(){
-    m_MainWindow->close();
-    set_visible(false);
+    m_MainWindow->set_visible(false);
 }
