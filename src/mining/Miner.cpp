@@ -42,7 +42,6 @@ void Miner::findMusicFiles(const std::string& directory) {
         if (S_ISDIR(path_stat.st_mode)) {
             findMusicFiles(fullPath); // Recursivamente buscar en subdirectorios
         } else if (entry->d_type == DT_REG && fullPath.substr(fullPath.find_last_of(".") + 1) == "mp3") {
-            std::lock_guard<std::mutex> lock(m_Mutex);
             file_paths.push_back(fullPath);
         }
     }
@@ -60,12 +59,6 @@ void Miner::mineTags(const std::function<void(double)>& progressCallback) {
 
     std::cout << " ::::::::::::::::::::::: TAGS " << std::endl;
     for (size_t i = 0; i < totalFiles; ++i) {
-
-        if (m_shall_stop) {
-            std::lock_guard<std::mutex> lock(m_Mutex);
-            m_has_stopped = true;
-            return; 
-        }
 
         const auto& filePath = file_paths[i];
 
@@ -108,11 +101,6 @@ void Miner::mineTags(const std::function<void(double)>& progressCallback) {
         progressCallback(progress);
     }
     
-    {
-        std::lock_guard<std::mutex> lock(m_Mutex);
-        m_shall_stop = false;
-        m_has_stopped = true;
-    }
 }
 
 void Miner::stopMining() {

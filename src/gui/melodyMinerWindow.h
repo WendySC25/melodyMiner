@@ -3,10 +3,6 @@
 
 #include <gtkmm.h>
 #include <gdkmm.h>
-#include <gtkmm/application.h>
-#include <gtkmm/cssprovider.h>
-#include <gtkmm/stylecontext.h>
-#include <gtkmm/filechooserdialog.h>
 #include <gio/gio.h> 
 
 #include <memory>
@@ -39,11 +35,12 @@ class MelodyMinerWindow : public Gtk::Window{
         void on_bind_listitem(const Glib::RefPtr<Gtk::ListItem>& list_item);
         int on_model_sort(const Glib::RefPtr<const ModelColumns>& a, const Glib::RefPtr<const ModelColumns>& b);
         void fillModelFromRolas(const std::vector<Rola>& rolas);
+        void updateModelFromRolas(const std::vector<Rola>& rolas);
         void add_entry(const std::string& filename, const Glib::ustring& description, const Rola& rola);
 
         void on_search_entry_changed();
         void on_search_button_clicked();
-        void updateModelFromRolas(const std::vector<Rola>& rolas);
+        
         void clearModel();
 
         void on_select_file_button_clicked();

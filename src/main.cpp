@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
     std::cout << " ::::::::::::::::::::::: MINING " << std::endl;
     miner.findMusicFiles(directory);
     miner.mineTags([](double progress) {
-    // Aquí puedes actualizar la barra de progreso
+
     std::cout << "Progreso: " << (progress * 100) << "%" << std::endl;
     });
 
