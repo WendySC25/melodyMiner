@@ -1,7 +1,6 @@
 
 #include "melodyMinerWindow.h"
 
-
 struct GridEntry {
     std::string m_filename;        
     Glib::ustring m_description;   
@@ -119,9 +118,10 @@ void MelodyMinerWindow::on_item_activated(unsigned int position){
     RolaDetailWindow detailWindow(rola);
     detailWindow.show();
     
-    /// 
-    // auto view = std::make_shared<FormatEditRola>();
-    // RolaController controller(*view, rola);
+    // FormatEditRola* view = new FormatEditRola();
+    // RolaController controller(view, rola);
+    // view->set_transient_for(*m_MainWindow);
+    // view->show();
 
     std::cout << "Item activated: filename=" << filename
               << ", description=" << description << std::endl;
@@ -224,7 +224,7 @@ void MelodyMinerWindow::updateModelFromRolas(const std::vector<Rola>& rolas) {
     int i = 1;
     for (const auto& rola : rolas) {
         GridEntry entry;
-        entry.m_filename = "assets/album_covers/" + std::to_string((i % 5)) + ".png"; 
+        entry.m_filename = "assets/album_covers/" + std::to_string((i % 4)) + ".png"; 
         
         std::string name;
 
@@ -247,7 +247,6 @@ void MelodyMinerWindow::updateModelFromRolas(const std::vector<Rola>& rolas) {
             << "<i>" << entry.m_album << "</i> (" << entry.m_year << ")\n"
             << "Track: " << entry.m_track;
 
-        // Asignar la cadena formateada a la descripción
         entry.m_description = oss.str();
 
         add_entry(entry.m_filename, entry.m_description, rola);
@@ -262,7 +261,6 @@ void MelodyMinerWindow::clearModel() {
 }
 
 
-// DÍALOGO
 void MelodyMinerWindow::on_select_file_button_clicked() {
     auto dialog = Gtk::FileDialog::create();
     dialog->select_folder(sigc::bind(sigc::mem_fun(
@@ -275,9 +273,8 @@ void MelodyMinerWindow::on_folder_dialog_finish(const Glib::RefPtr<Gio::AsyncRes
   try{
     auto folder = dialog->select_folder_finish(result);
     std::cout << "Folder selected: " << folder->get_path() << std::endl;
-    
-    MinerDialog minerWindow(m_MainWindow, folder->get_path());
-    minerWindow.show();
+    MinerDialog* minerDialog = new MinerDialog(folder->get_path()); 
+    minerDialog->show();
 
   } catch (const Gtk::DialogError& err){
     std::cout << "No folder selected. " << err.what() << std::endl;

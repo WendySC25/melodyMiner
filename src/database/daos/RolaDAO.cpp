@@ -73,8 +73,8 @@ int RolaDAO::getIdByAttribute(const std::string &attributeValue) {
 
 
 std::vector<Rola> RolaDAO::executeQuery(const std::string& input) {
-
-    std::string query = processQuery(input);
+    QueryProcessor queryProcessor;
+    std::string query = queryProcessor.processQuery(input);
 
     std::vector<Rola> rolas;
     sqlite3_stmt* stmt;
