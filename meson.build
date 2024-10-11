@@ -10,6 +10,7 @@ utils_srcs = [
     'src/utils/ID3Tag.cpp',
     'src/utils/ID3TagManager.cpp',
     'src/utils/ConfigurationFile.cpp',
+    'src/query/queryProcessor.cpp',  
 ]
 
 database_srcs = [
@@ -37,23 +38,32 @@ sqlite_dep = dependency('sqlite3', required: true)
 
 executable('melodyMiner', srcs,
     dependencies : [taglib_dep, gtkmm_dep, sqlite_dep],
-    link_args : ['-L/opt/homebrew/Cellar/taglib/1.13.1/lib', '-ltag', '-ltag_c']
+    link_args : ['-ltag', '-ltag_c']
 )
 
 # agahsg
-simple_srcs = [
-    'src/gui/simple2.cpp',
+gui_srcs = [
+    'src/gui/main.cc',
+    'src/gui/melodyMinerWindow.cc',
+    'src/gui/RolaDetailview.cc',   
+    'src/gui/MinerDialog.cc',  
+    'src/gui/dialog/FormatEditRola.cc',
+    'src/gui/dialog/RolaController.cc',
 ]
 
-executable('my_program', simple_srcs,
-    dependencies: gtkmm_dep,
+all_src = gui_srcs + utils_srcs + database_srcs + mining_srcs
+
+executable('my_program', all_src,
+    dependencies: [gtkmm_dep, sqlite_dep, taglib_dep],
     win_subsystem: 'windows',
+    link_args : ['-ltag', '-ltag_c']
 )
 
 # Test
 test_srcs = [
     'test/testQuery.cpp',
     'src/query/queryProcessor.cpp',  
+
 ]
 
 # Dependencia de Google Test
