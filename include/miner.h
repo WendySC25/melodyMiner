@@ -21,7 +21,7 @@ class MinerDialog;
 
 class Miner {
 public:
-    Miner();
+    Miner(Database &db);
 
     void mineTags(MinerDialog* caller, std::string directory);
     void findMusicFiles(const std::string& directory);
@@ -37,6 +37,7 @@ private:
     double m_fraction_done;
     std::vector<std::string> file_paths;
     Glib::ustring m_message;
+    ID3TagManager tagManager;
 };
 
 #endif // MINER_H

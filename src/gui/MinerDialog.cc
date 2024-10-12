@@ -1,6 +1,6 @@
 #include "src/gui/MinerDialog.h"
 
-MinerDialog::MinerDialog(const std::string& path) :
+MinerDialog::MinerDialog(const std::string& path, Database& db) :
   m_VBox(Gtk::Orientation::VERTICAL, 5),
   m_ButtonBox(Gtk::Orientation::HORIZONTAL),
   m_ButtonStart("Start work"),
@@ -10,7 +10,7 @@ MinerDialog::MinerDialog(const std::string& path) :
   m_ScrolledWindow(),
   m_TextView(),
   m_Dispatcher(),
-  m_Worker(),
+  m_Worker(db),
   m_path(path),
   m_WorkerThread(nullptr)
   

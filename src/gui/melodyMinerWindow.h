@@ -20,7 +20,7 @@
 
 class MelodyMinerWindow : public Gtk::Window{
     public:
-        MelodyMinerWindow();
+        MelodyMinerWindow(const std::string& dbPath);
         ~MelodyMinerWindow() override;
         Gtk::Window* get_window();
 
@@ -63,7 +63,6 @@ class MelodyMinerWindow : public Gtk::Window{
         Database database;
         RolaDAO rolaDAO;
         
-
         class ModelColumns : public Glib::Object{
             public:
                 std::string m_filename;

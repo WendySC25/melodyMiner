@@ -15,12 +15,13 @@
 #include <taglib/fileref.h>
 #include <taglib/tag.h>
 
-Miner::Miner() :
+Miner::Miner(Database &db) :
   m_Mutex(),
   m_shall_stop(false),
   m_has_stopped(false),
   m_fraction_done(0.0),
-  m_message()
+  m_message(),
+  tagManager(db)
 {}
 
 void Miner::findMusicFiles(const std::string& directory) {
@@ -78,8 +79,6 @@ void Miner::mineTags(MinerDialog* caller, std::string directory){
   } 
 
     findMusicFiles(directory);
-    Database db("db/music_database.db");  
-    ID3TagManager tagManager(db);
     size_t totalFiles = file_paths.size(); 
     std::cout << " ::::::::::::::::::::::: TAGS " << std::endl;
     for (size_t i = 0; i < totalFiles; ++i) {
@@ -138,9 +137,10 @@ void Miner::mineTags(MinerDialog* caller, std::string directory){
 
   {
     std::lock_guard<std::mutex> lock(m_Mutex);
-    totalFiles = 0;
-    m_fraction_done = 1;
-    m_message += "No mp3 files to mine";
+    if(totalFiles == 0) { 
+      m_fraction_done = 1;
+      m_message += "No mp3 files to mine";
+    }
 
     m_shall_stop = false;
     m_has_stopped = true;

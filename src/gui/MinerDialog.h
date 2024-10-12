@@ -10,7 +10,7 @@
 class MinerDialog : public Gtk::Window
 {
 public:
-  MinerDialog(const std::string& path);
+  MinerDialog(const std::string& path, Database& db);
   void notify();
 
 private:

@@ -11,7 +11,7 @@ struct GridEntry {
     int m_track;                   
 };
 
-MelodyMinerWindow::MelodyMinerWindow() : database("db/music_database.db"), 
+MelodyMinerWindow::MelodyMinerWindow(const std::string& dbPath) : database(dbPath), 
       rolaDAO(database){
 
     auto builder = Gtk::Builder::create_from_file("src/gui/melodyMinerWindow.ui");
@@ -115,8 +115,8 @@ void MelodyMinerWindow::on_item_activated(unsigned int position){
     const std::string filename = col->m_filename;
     const Glib::ustring description = col->m_description;
 
-    RolaDetailWindow detailWindow(rola);
-    detailWindow.show();
+    // RolaDetailWindow detailWindow(rola);
+    // detailWindow.show();
     
     // FormatEditRola* view = new FormatEditRola();
     // RolaController controller(view, rola);
@@ -273,7 +273,7 @@ void MelodyMinerWindow::on_folder_dialog_finish(const Glib::RefPtr<Gio::AsyncRes
   try{
     auto folder = dialog->select_folder_finish(result);
     std::cout << "Folder selected: " << folder->get_path() << std::endl;
-    MinerDialog* minerDialog = new MinerDialog(folder->get_path()); 
+    MinerDialog* minerDialog = new MinerDialog(folder->get_path(), this->database); 
     minerDialog->show();
 
   } catch (const Gtk::DialogError& err){
