@@ -88,32 +88,7 @@ void Miner::mineTags(MinerDialog* caller, std::string directory){
         std::lock_guard<std::mutex> lock(m_Mutex);
         const auto& filePath = file_paths[i];
 
-        TagLib_File *file = taglib_file_new(filePath.c_str());
-
-        if (file) {
-          TagLib_Tag *tag = taglib_file_tag(file);
-          if (tag) {
-            const char *title = taglib_tag_title(tag);
-            const char *artist = taglib_tag_artist(tag);
-            const char *album = taglib_tag_album(tag);
-            const char *genre = taglib_tag_genre(tag);
-            uint64_t year = taglib_tag_year(tag);
-            uint64_t track = taglib_tag_track(tag);
-
-            auto newTag = std::make_unique<ID3Tag>(
-                    (title && title[0] != '\0') ? std::string(title) : "Unknown",
-                    (artist && artist[0] != '\0') ? std::string(artist) : "Unknown",
-                    (album && album[0] != '\0') ? std::string(album) : "Unknown",
-                    (genre && genre[0] != '\0') ? std::string(genre) : "Unknown",
-                    (track > 0) ? static_cast<int>(track) : 0,  
-                    (year > 0) ? static_cast<int>(year) : 2024,
-                    filePath
-                );
-
-            tagManager.addTagsToDatabase(newTag);
-            taglib_file_free(file);
-            }
-        }
+        tagManager.readTag(filePath);
 
         m_fraction_done = static_cast<double>(i + 1) / totalFiles;
         std::ostringstream ostr;

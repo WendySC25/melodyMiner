@@ -9,11 +9,6 @@
 #include <mutex>
 #include <functional>
 
-#include <taglib/tag_c.h>
-#include <taglib/fileref.h>
-#include <taglib/tag.h>
-#include "ID3Tag.h"
-
 #include "include/ID3TagManager.h"
 
 class MinerDialog;
