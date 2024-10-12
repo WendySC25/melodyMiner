@@ -1,6 +1,12 @@
 project('melodyMiner', 'cpp',
     default_options : ['cpp_std=c++17'])
 
+# Define dependencies
+taglib_dep = dependency('taglib', required: true)
+gtkmm_dep = dependency('gtkmm-4.0', version: '>= 4.6.0')
+sqlite_dep = dependency('sqlite3', required: true)
+
+
 # Components
 mining_srcs = [
     'src/mining/Miner.cpp',
@@ -27,23 +33,7 @@ database_srcs = [
     'src/database/models/Rola.cpp',
 ]
 
-srcs = [
-    'src/main.cpp',
-] + mining_srcs + utils_srcs + database_srcs
-
-# Define dependencies
-taglib_dep = dependency('taglib', required: true)
-gtkmm_dep = dependency('gtkmm-4.0', version: '>= 4.6.0')
-sqlite_dep = dependency('sqlite3', required: true)
-
-#executable('melodyMiner', srcs,
-#    dependencies : [taglib_dep, gtkmm_dep, sqlite_dep],
-#    link_args : ['-ltag', '-ltag_c']
-#)
-
-# agahsg
 gui_srcs = [
-    'src/gui/main.cc',
     'src/gui/melodyMinerWindow.cc',
     'src/gui/RolaDetailview.cc',   
     'src/gui/MinerDialog.cc',
@@ -51,9 +41,9 @@ gui_srcs = [
     'src/gui/dialog/RolaController.cc',
 ]
 
-all_src = gui_srcs + utils_srcs + database_srcs + mining_srcs
+all_src = ['src/main.cc'] + gui_srcs + utils_srcs + database_srcs + mining_srcs
 
-executable('my_program', all_src,
+executable('melodyMiner', all_src,
     dependencies: [gtkmm_dep, sqlite_dep, taglib_dep],
     win_subsystem: 'windows',
     link_args : ['-ltag', '-ltag_c']
@@ -66,11 +56,6 @@ test_srcs = [
 
 ]
 
-# Dependencia de Google Test
 gtest_dep = dependency('gtest', required: true)
-
-# Crear el ejecutable para las pruebas
 test_exe = executable('test_my_code', test_srcs, dependencies: [gtest_dep])
-
-# Definir el test en Meson
 test('unit_test', test_exe)

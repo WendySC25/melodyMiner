@@ -119,5 +119,5 @@ void MinerDialog::on_notification_from_worker_thread(){
 }
 
 void MinerDialog::set_on_mining_finished(std::function<void()> callback) {
-    on_mining_finished_callback = callback;
+  on_mining_finished_callback = callback;
 }

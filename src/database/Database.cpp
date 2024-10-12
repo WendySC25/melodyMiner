@@ -2,11 +2,9 @@
 #include <iostream>
 
 Database::Database(const std::string &dbPath) {
-    if (!openDatabase(dbPath)) {
+    if (!openDatabase(dbPath)) 
         std::cerr << "No se pudo abrir la base de datos: " << dbPath << std::endl;
-    } else {
-        createTables(); 
-    }
+    else createTables(); 
 }
 
 Database::~Database() {
