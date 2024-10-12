@@ -2,6 +2,18 @@
 
 **MelodyMiner** is a music database project designed to mine and manage MP3 files with ID3v2.4 tags. The application features a user-friendly graphical interface that displays song information (such as title, artist, album, and cover art) and allows users to perform queries using an easy-to-understand language.
 
+
+---
+
+### **Attention:** 
+
+**When the program is run, an additional window is created.** 
+
+**Do not close this window; it is a bug that I am currently working on.**
+
+---
+
+
 ## Key Features
 
 - Automatically scans a specified directory for MP3 files and extracts relevant metadata, including:
