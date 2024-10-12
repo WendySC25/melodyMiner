@@ -3,9 +3,7 @@
 ID3TagManager::ID3TagManager(Database& db) : albumDAO(db), performerDAO(db), rolaDAO(db) {}
 
 void ID3TagManager::addTagsToDatabase(const std::unique_ptr<ID3Tag>& tagPtr) {
-
         if(tagPtr) {
-
             Album newAlbum(0,tagPtr->getPath(),tagPtr->getAlbum(),tagPtr->getYear());
             Performer newPerformer(0,2,tagPtr->getArtist());
 
@@ -27,12 +25,8 @@ void ID3TagManager::addTagsToDatabase(const std::unique_ptr<ID3Tag>& tagPtr) {
                     tagPtr->getGenre());
 
             int id_rola = rolaDAO.getIdByAttribute(newRola.getTitle());
-            if (id_rola == -1) id_rola = rolaDAO.add(newRola);
-                
-        } else {
-            std::cout << "ERROR ." << std::endl;
+            if (id_rola == -1) id_rola = rolaDAO.add(newRola);          
         }
-    
 }
 
 void ID3TagManager::readTag(const std::string& filePath){

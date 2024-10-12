@@ -45,8 +45,8 @@ class MelodyMinerWindow : public Gtk::Window{
 
         void on_select_file_button_clicked();
         void on_folder_dialog_finish(const Glib::RefPtr<Gio::AsyncResult>& result, const Glib::RefPtr<Gtk::FileDialog>& dialog);
-
-
+        void on_mining_finished();
+        
         Glib::RefPtr<Gio::ListStore<ModelColumns>> m_data_model;
         Glib::RefPtr<Gtk::SingleSelection> m_selection_model;
         Glib::RefPtr<Gtk::SignalListItemFactory> m_factory;
@@ -62,7 +62,7 @@ class MelodyMinerWindow : public Gtk::Window{
 
         Database database;
         RolaDAO rolaDAO;
-        
+
         class ModelColumns : public Glib::Object{
             public:
                 std::string m_filename;

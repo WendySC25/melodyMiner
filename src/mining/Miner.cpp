@@ -25,6 +25,7 @@ Miner::Miner(Database &db) :
 {}
 
 void Miner::findMusicFiles(const std::string& directory) {
+
     DIR* dir = opendir(directory.c_str());
     if (!dir) {
         std::cerr << "Failed to open directory: " << directory << " (" << strerror(errno) << ")" << std::endl;
@@ -88,7 +89,11 @@ void Miner::mineTags(MinerDialog* caller, std::string directory){
         std::lock_guard<std::mutex> lock(m_Mutex);
         const auto& filePath = file_paths[i];
 
-        tagManager.readTag(filePath);
+        try {
+          tagManager.readTag(filePath); 
+        } catch (const std::exception& e) {
+          std::cerr << "Error reading tag for file: " << filePath << " - " << e.what() << std::endl;
+        }
 
         m_fraction_done = static_cast<double>(i + 1) / totalFiles;
         std::ostringstream ostr;

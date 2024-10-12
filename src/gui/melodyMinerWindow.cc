@@ -273,7 +273,10 @@ void MelodyMinerWindow::on_folder_dialog_finish(const Glib::RefPtr<Gio::AsyncRes
   try{
     auto folder = dialog->select_folder_finish(result);
     std::cout << "Folder selected: " << folder->get_path() << std::endl;
-    MinerDialog* minerDialog = new MinerDialog(folder->get_path(), this->database); 
+    MinerDialog* minerDialog = new MinerDialog(folder->get_path(), this->database);
+
+    minerDialog->set_on_mining_finished([this]() { on_mining_finished(); });
+
     minerDialog->show();
 
   } catch (const Gtk::DialogError& err){
@@ -284,6 +287,12 @@ void MelodyMinerWindow::on_folder_dialog_finish(const Glib::RefPtr<Gio::AsyncRes
     std::cout << "Unexpected exception. " << err.what() << std::endl;
   }
 }
+
+void MelodyMinerWindow::on_mining_finished() {
+    std::vector<Rola> rolas = rolaDAO.getAll(); 
+    updateModelFromRolas(rolas); 
+}
+
 
 
 

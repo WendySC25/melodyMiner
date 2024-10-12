@@ -6,12 +6,16 @@
 #include <atomic>
 
 #include "include/Miner.h"
+#include <sigc++/sigc++.h>
 
 class MinerDialog : public Gtk::Window
 {
 public:
   MinerDialog(const std::string& path, Database& db);
   void notify();
+
+  void set_on_mining_finished(std::function<void()> callback);
+  std::function<void()> on_mining_finished_callback;
 
 private:
   // Signal handlers.

@@ -109,6 +109,15 @@ void MinerDialog::on_notification_from_worker_thread(){
     delete m_WorkerThread;
     m_WorkerThread = nullptr;
     update_start_stop_buttons();
+
+    if (on_mining_finished_callback) {
+      on_mining_finished_callback();
+    }
+
   }
   update_widgets();
+}
+
+void MinerDialog::set_on_mining_finished(std::function<void()> callback) {
+    on_mining_finished_callback = callback;
 }
